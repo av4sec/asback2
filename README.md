@@ -20,10 +20,11 @@
 
 5. Start backend
 
-`docker --name asback2 run -e "spring.data.mongodb.uri=mongodb://asdb:27017/test" -p 8080:8080 --link asdb:mongo -t asback2`
+`docker run -e "spring.data.mongodb.uri=mongodb://asdb:27017/test" -p 8080:8080 --link asdb:mongo -t asback2`
 
 ### Test
 
-[http://localhost:8080/role](http://localhost:8080/role)
+[http://localhost:8080/api/role](http://localhost:8080/api/role)
+[http://localhost:8080/api/role/10003](http://localhost:8080/api/role/10003)
 
 
