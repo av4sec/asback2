@@ -10,21 +10,22 @@
 
 `docker run --name asdb -p 27017:27017 -d mongo`
 
-3. Build
+3. Get backend from [Docker repository](https://hub.docker.com/r/av4sec/asback2)
 
-`./gradlew build buildDocker`
+`docker pull av4sec/asback2`
 
-4. Build the image
+4. Start backend
 
-`docker build -t asback2 build/docker`
+`docker run -e "spring.data.mongodb.uri=mongodb://asdb:27017/test" -p 8080:8080 --link asdb:mongo -t av4sec/asback2`
 
-5. Start backend
-
-`docker run -e "spring.data.mongodb.uri=mongodb://asdb:27017/test" -p 8080:8080 --link asdb:mongo -t asback2`
 
 ### Test
 
-[http://localhost:8080/api/role](http://localhost:8080/api/role)
-[http://localhost:8080/api/role/10003](http://localhost:8080/api/role/10003)
+* [http://localhost:8080/api/role](http://localhost:8080/api/role)
+* [http://localhost:8080/api/role/10003](http://localhost:8080/api/role/10003)
 
 
+### DIY
+
+* `./gradlew build buildDocker`
+* `docker build -t asback2 build/docker`
