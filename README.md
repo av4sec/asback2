@@ -23,6 +23,7 @@
 
 * [http://localhost:8080/api/role](http://localhost:8080/api/role)
 * [http://localhost:8080/api/role/10003](http://localhost:8080/api/role/10003)
+* `curl -F "file=@/Users/.../role_01.csv" http://localhost:8080/api/upload/file/role`
 
 
 ### DIY

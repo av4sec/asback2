@@ -4,7 +4,8 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
-        classpath('se.transmode.gradle:gradle-docker:1.2')
+        classpath("se.transmode.gradle:gradle-docker:1.2")
+        classpath("org.apache.commons:commons-csv:1.4")
     }
 }
 
@@ -43,5 +44,6 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.apache.commons:commons-csv:1.4")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

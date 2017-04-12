@@ -4,8 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+
+import avasec.storage.StorageProperties;
+import avasec.storage.StorageService;
+
 
 @SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
 public class Application implements CommandLineRunner {
 
   @Autowired
@@ -32,5 +39,13 @@ public class Application implements CommandLineRunner {
     }
     System.out.println();
 
+  }
+
+  @Bean
+  CommandLineRunner init(StorageService storageService) {
+    return (args) -> {
+      storageService.deleteAll();
+      storageService.init();
+    };
   }
 }
