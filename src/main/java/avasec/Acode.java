@@ -1,19 +1,19 @@
 package avasec;
 
-public class Role extends Entity {
+public class Acode extends Entity {
 
-  public Role(long extid, String charid, String name) {
+  public Acode(long extid, String charid, String name) {
     super(extid, charid, name);
   }
 
-  public Role() {
+  public Acode() {
     super();
   }
 
   @Override
   public String toString() {
     return String.format(
-      "Role[id=%s, extid=%d, curr.charid='%s', curr.name='%s', curr.version=%d]",
+      "Acode[id=%s, extid=%d, curr.charid='%s', curr.name='%s', curr.version=%d]",
       id, this.extid, this.curr.charid, this.curr.name, this.curr.version);
   }
 

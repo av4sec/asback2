@@ -18,6 +18,9 @@ public class Application implements CommandLineRunner {
   @Autowired
   private RoleRepository roleRepository;
 
+  @Autowired
+  private AcodeRepository acodeRepository;
+
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
@@ -25,6 +28,8 @@ public class Application implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
+    // ROLES
+    // ------------------------------------------------------------------------
     roleRepository.deleteAll();
 
     // save a couple of roles
@@ -39,6 +44,23 @@ public class Application implements CommandLineRunner {
     }
     System.out.println();
 
+    // ACCESS CODES
+    // ------------------------------------------------------------------------
+    acodeRepository.deleteAll();
+
+    // save a couple of access codes
+    acodeRepository.save(new Acode(10001, "acode_1", "Acode 1"));
+    acodeRepository.save(new Acode(10002, "acode_2", "Acode 2"));
+    acodeRepository.save(new Acode(10003, "acode_3", "Acode 3"));
+    acodeRepository.save(new Acode(10004, "acode_4", "Acode 4"));
+
+    System.out.println("-------------------------------");
+    for (Acode acode : acodeRepository.findAll()) {
+      System.out.println(acode);
+    }
+    System.out.println();
+
+    // ------------------------------------------------------------------------
   }
 
   @Bean
