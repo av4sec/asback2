@@ -61,6 +61,20 @@ public class Application implements CommandLineRunner {
     System.out.println();
 
     // ------------------------------------------------------------------------
+
+    Role role = roleRepository.findByExtid(10004);
+    role.curr.acode.add(acodeRepository.findByExtid(10001));
+    role.curr.acode.add(acodeRepository.findByExtid(10002));
+    roleRepository.save(role);
+
+    Acode acode;
+    acode = acodeRepository.findByExtid(10001);
+    acode.curr.role.add(role);
+    acodeRepository.save(acode);
+
+    acode = acodeRepository.findByExtid(10002);
+    acode.curr.role.add(role);
+    acodeRepository.save(acode);
   }
 
   @Bean
