@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-group = 'dc'
+group = 'av4sec'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
