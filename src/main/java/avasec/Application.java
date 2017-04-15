@@ -67,11 +67,23 @@ public class Application implements CommandLineRunner {
     // ------------------------------------------------------------------------
     elementRepository.deleteAll();
 
-    // save a couple of access codes
-    elementRepository.save(new Element(1001, "element_1", "Element 1"));
-    elementRepository.save(new Element(1002, "element_2", "Element 2"));
-    elementRepository.save(new Element(1003, "element_3", "Element 3"));
-    elementRepository.save(new Element(1004, "element_4", "Element 4"));
+    // save a couple of securable elements
+    elementRepository.save(new Wfc(1001, "wfc_1", "Wfc 1"));
+    elementRepository.save(new Wfc(1002, "wfc_2", "Wfc 2"));
+    elementRepository.save(new Wfc(1003, "wfc_3", "Wfc 3"));
+    elementRepository.save(new Wfc(1004, "wfc_4", "Wfc 4"));
+    elementRepository.save(new Task(1005, "task_1", "Task 1"));
+    elementRepository.save(new Task(1006, "task_2", "Task 2"));
+    elementRepository.save(new Task(1007, "task_3", "Task 3"));
+    elementRepository.save(new Ctx(1008, "ctx_1", "Ctx 1"));
+    elementRepository.save(new Ctx(1009, "ctx_2", "Ctx 2"));
+    elementRepository.save(new Ctx(1010, "ctx_3", "Ctx 3"));
+    elementRepository.save(new Ctx(1011, "ctx_4", "Ctx 4"));
+    elementRepository.save(new Appl(1012, "appl_1", "Appl 1"));
+    elementRepository.save(new Appl(1013, "appl_2", "Appl 2"));
+    elementRepository.save(new Mtyp(1014, "mtyp_2", "Mtyp 2"));
+    elementRepository.save(new Mtyp(1015, "mtyp_3", "Mtyp 3"));
+    elementRepository.save(new Mtyp(1016, "mtyp_4", "Mtyp 4"));
 
     System.out.println("-------------------------------");
     for (Element element : elementRepository.findAll()) {
@@ -87,16 +99,16 @@ public class Application implements CommandLineRunner {
     role.curr.acode.add(acodeRepository.findByExtid(102));
     roleRepository.save(role);
 
-    Element element;
-    element = elementRepository.findByExtid(1003);
-    element.curr.acode.add(acodeRepository.findByExtid(101));
-    element.curr.acode.add(acodeRepository.findByExtid(103));
-    elementRepository.save(element);
+    Wfc wfc;
+    wfc = (Wfc)elementRepository.findByExtid(1003);
+    wfc.curr.acode.add(acodeRepository.findByExtid(101));
+    wfc.curr.acode.add(acodeRepository.findByExtid(103));
+    elementRepository.save(wfc);
 
-    element = elementRepository.findByExtid(1004);
-    element.curr.acode.add(acodeRepository.findByExtid(102));
-    element.curr.acode.add(acodeRepository.findByExtid(104));
-    elementRepository.save(element);
+    wfc = (Wfc)elementRepository.findByExtid(1004);
+    wfc.curr.acode.add(acodeRepository.findByExtid(102));
+    wfc.curr.acode.add(acodeRepository.findByExtid(104));
+    elementRepository.save(wfc);
   }
 
   @Bean

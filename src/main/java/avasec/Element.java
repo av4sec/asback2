@@ -9,11 +9,13 @@ public class Element extends Entity {
 
   public Element.Payload curr;
   public List<Element.Payload> hist;
+  public String type;
 
   public Element(long extid, String charid, String name) {
     this.extid = extid;
     this.curr = new Element.Payload(charid, name, 1);
     this.hist = new ArrayList<>();
+    this.type = "Element";
   }
 
   public Element() {
