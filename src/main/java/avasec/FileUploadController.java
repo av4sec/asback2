@@ -78,7 +78,16 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
-        roleRepository.save(new Role(extid, charid, name));
+        String acode = record.get("acode");
+        Role role = new Role(extid, charid, name);
+        for (String acode_extid: acode.split("\\|")) {
+          try {
+            role.curr.acode.add(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+          } catch (NumberFormatException e) {
+            System.out.println("Error: " + record.get("extid"));
+          }
+        }
+        roleRepository.save(role);
       }
 
     } catch (IOException e) {
