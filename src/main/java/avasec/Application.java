@@ -97,6 +97,7 @@ public class Application implements CommandLineRunner {
     role = roleRepository.findByExtid(14);
     role.curr.acode.add(acodeRepository.findByExtid(101));
     role.curr.acode.add(acodeRepository.findByExtid(102));
+    role.curr.parent.add(roleRepository.findByExtid(11));
     roleRepository.save(role);
 
     Wfc wfc;

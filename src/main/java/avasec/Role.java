@@ -31,10 +31,12 @@ public class Role extends Entity {
 
     @DBRef
     public List<Acode> acode;
+    public List<Role> parent;
 
     public Payload(String charid, String name, int version) {
       super(charid, name, version);
       this.acode = new ArrayList<>();
+      this.parent = new ArrayList<>();
     }
   }
 }
