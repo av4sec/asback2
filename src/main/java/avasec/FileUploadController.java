@@ -125,6 +125,16 @@ public class FileUploadController {
     return "";
   }
 
+  public void addAcode(Element element, String acode) {
+    for (String acode_extid: acode.split("\\|")) {
+      try {
+        element.curr.acode.add(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+      } catch (NumberFormatException e) {
+        System.out.println("element error: " + element.extid);
+      }
+    }
+  }
+
   @PostMapping("/file/element/appl")
   public String handleApplUpload(@RequestParam("file") MultipartFile file) {
     handleElementUpload(file, "Appl", (record -> {
@@ -132,7 +142,10 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
-        elementRepository.save(new Appl(extid, charid, name));
+        String acode = record.get("acode");
+        Appl appl = new Appl(extid, charid, name);
+        addAcode(appl, acode);
+        elementRepository.save(appl);
       } catch (Exception e) {
         System.out.println("appl error: " + e.toString());
       }
@@ -147,7 +160,10 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
-        elementRepository.save(new Ctx(extid, charid, name));
+        String acode = record.get("acode");
+        Ctx ctx = new Ctx(extid, charid, name);
+        addAcode(ctx, acode);
+        elementRepository.save(ctx);
       } catch (Exception e) {
         System.out.println("ctx error: " + e.toString());
       }
@@ -162,7 +178,10 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
-        elementRepository.save(new Mtyp(extid, charid, name));
+        String acode = record.get("acode");
+        Mtyp mtyp = new Mtyp(extid, charid, name);
+        addAcode(mtyp, acode);
+        elementRepository.save(mtyp);
       } catch (Exception e) {
         System.out.println("mtyp error: " + e.toString());
       }
@@ -177,7 +196,10 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
-        elementRepository.save(new Task(extid, charid, name));
+        String acode = record.get("acode");
+        Task task = new Task(extid, charid, name);
+        addAcode(task, acode);
+        elementRepository.save(task);
       } catch (Exception e) {
         System.out.println("task error: " + e.toString());
       }
@@ -192,7 +214,10 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
-        elementRepository.save(new Wfc(extid, charid, name));
+        String acode = record.get("acode");
+        Wfc wfc = new Wfc(extid, charid, name);
+        addAcode(wfc, acode);
+        elementRepository.save(wfc);
       } catch (Exception e) {
         System.out.println("wfc error: " + e.toString());
       }
