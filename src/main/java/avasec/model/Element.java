@@ -1,4 +1,4 @@
-package avasec;
+package avasec.model;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -32,7 +32,13 @@ public class Element extends Entity {
   public class Payload extends Entity.Payload {
 
     @DBRef
-    public List<Acode> acode;
+    private List<Acode> acode;
+
+    public void addAcode(Acode acode) {
+      if (!this.acode.contains(acode)) {
+        this.acode.add(acode);
+      }
+    }
 
     public Payload(String charid, String name, int version) {
       super(charid, name, version);

@@ -1,21 +1,21 @@
-package avasec;
+package avasec.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="element")
-public class Appl extends Element {
+public class Wfc extends Element {
 
-  public Appl(long extid, String charid, String name) {
+  public Wfc(long extid, String charid, String name) {
     super(extid, charid, name);
-    this.type = "Appl";
+    this.type = "Wfc";
   }
 
-  public Appl() { super(); }
+  public Wfc() { super(); }
 
   @Override
   public String toString() {
     return String.format(
-      "Appl[id=%s, extid=%d, curr.charid='%s', curr.name='%s', curr.version=%d]",
+      "Wfc[id=%s, extid=%d, curr.charid='%s', curr.name='%s', curr.version=%d]",
       id, this.extid, this.curr.charid, this.curr.name, this.curr.version);
   }
 }

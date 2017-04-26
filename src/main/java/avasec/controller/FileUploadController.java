@@ -1,21 +1,21 @@
-package avasec;
+package avasec.controller;
 
+import avasec.model.*;
+import avasec.repository.AcodeRepository;
+import avasec.repository.ElementRepository;
+import avasec.repository.RoleRepository;
 import avasec.storage.StorageFileNotFoundException;
 import avasec.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
 import java.util.stream.Collectors;
-import java.nio.file.Path;
-import java.nio.file.Files;
 
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVFormat;
@@ -85,7 +85,7 @@ public class FileUploadController {
         Role role = new Role(extid, charid, name);
         for (String acode_extid: acode.split("\\|")) {
           try {
-            role.curr.acode.add(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+            role.curr.addAcode(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
           } catch (NumberFormatException e) {
             System.out.println("role error: " + record.get("extid"));
           }
@@ -128,7 +128,7 @@ public class FileUploadController {
   public void addAcode(Element element, String acode) {
     for (String acode_extid: acode.split("\\|")) {
       try {
-        element.curr.acode.add(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+        element.curr.addAcode(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
       } catch (NumberFormatException e) {
         System.out.println("element error: " + element.extid);
       }

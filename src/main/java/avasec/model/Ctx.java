@@ -1,4 +1,4 @@
-package avasec;
+package avasec.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

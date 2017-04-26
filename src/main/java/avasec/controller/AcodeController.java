@@ -1,7 +1,9 @@
-package avasec;
+package avasec.controller;
 
 import java.util.Collection;
 
+import avasec.model.Acode;
+import avasec.repository.AcodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,22 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping("/role")
-public class RoleController {
+@RequestMapping("/acode")
+public class AcodeController {
 
   @Autowired
-  private RoleRepository roleRepository;
+  private AcodeRepository acodeRepository;
 
   @RequestMapping(value = "/{extid}", method = GET)
-  public Role getRoleByExtid(@PathVariable Long extid) {
+  public Acode getAcodeByExtid(@PathVariable Long extid) {
 
-    Role role = roleRepository.findByExtid(extid);
-    return role;
+    Acode acode = acodeRepository.findByExtid(extid);
+    return acode;
   }
 
   @RequestMapping(method = GET)
-  Collection<Role> allRoles() {
-    return roleRepository.findAll();
+  Collection<Acode> allAcodes() {
+    return acodeRepository.findAll();
   }
 
 }

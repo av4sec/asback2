@@ -1,10 +1,11 @@
-package avasec;
+package avasec.repository;
 
+import avasec.model.Element;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ElementRepository extends MongoRepository<Element, String> {
 
-  public Element findByExtid(long extid);
+  Element findByExtid(long extid);
 
   Long deleteByType(String type);
 }

@@ -1,5 +1,9 @@
 package avasec;
 
+import avasec.model.*;
+import avasec.repository.AcodeRepository;
+import avasec.repository.ElementRepository;
+import avasec.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -95,20 +99,22 @@ public class Application implements CommandLineRunner {
 
     Role role;
     role = roleRepository.findByExtid(14);
-    role.curr.acode.add(acodeRepository.findByExtid(101));
-    role.curr.acode.add(acodeRepository.findByExtid(102));
-    role.curr.parent.add(roleRepository.findByExtid(11));
+    role.curr.addAcode(acodeRepository.findByExtid(101));
+    role.curr.addAcode(acodeRepository.findByExtid(102));
+    role.curr.addParent(roleRepository.findByExtid(11));
     roleRepository.save(role);
 
     Wfc wfc;
     wfc = (Wfc)elementRepository.findByExtid(1003);
-    wfc.curr.acode.add(acodeRepository.findByExtid(101));
-    wfc.curr.acode.add(acodeRepository.findByExtid(103));
+    wfc.curr.addAcode(acodeRepository.findByExtid(101));
+    wfc.curr.addAcode(acodeRepository.findByExtid(103));
     elementRepository.save(wfc);
 
     wfc = (Wfc)elementRepository.findByExtid(1004);
-    wfc.curr.acode.add(acodeRepository.findByExtid(102));
-    wfc.curr.acode.add(acodeRepository.findByExtid(104));
+    wfc.curr.addAcode(acodeRepository.findByExtid(102));
+    wfc.curr.addAcode(acodeRepository.findByExtid(103));
+    wfc.curr.addAcode(acodeRepository.findByExtid(104));
+    wfc.curr.addAcode(acodeRepository.findByExtid(104));
     elementRepository.save(wfc);
   }
 

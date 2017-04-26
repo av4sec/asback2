@@ -1,6 +1,4 @@
-package avasec;
-
-import org.springframework.data.mongodb.core.mapping.DBRef;
+package avasec.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,4 +24,20 @@ public class Acode extends Entity {
       "Acode[id=%s, extid=%d, curr.charid='%s', curr.name='%s', curr.version=%d]",
       id, this.extid, this.curr.charid, this.curr.name, this.curr.version);
   }
+  public class Payload extends Entity.Payload {
+
+    private List<String> role_id;
+
+    public void addRoleId(String roleId) {
+      if (!this.role_id.contains(roleId)) {
+        this.role_id.add(roleId);
+      }
+    }
+
+    public Payload(String charid, String name, int version) {
+      super(charid, name, version);
+      this.role_id = new ArrayList<>();
+    }
+  }
+
 }
