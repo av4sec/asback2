@@ -1,9 +1,8 @@
 package avasec.controller;
 
 import avasec.model.*;
-import avasec.repository.AcodeRepository;
-import avasec.repository.ElementRepository;
-import avasec.repository.RoleRepository;
+import avasec.service.*;
+import avasec.repository.*;
 import avasec.storage.StorageFileNotFoundException;
 import avasec.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,13 @@ public class FileUploadController {
   private RoleRepository roleRepository;
 
   @Autowired
+  private RoleService roleService;
+
+  @Autowired
   private AcodeRepository acodeRepository;
+
+  @Autowired
+  private ElementService elementService;
 
   @Autowired
   private ElementRepository elementRepository;
@@ -69,6 +74,8 @@ public class FileUploadController {
   @PostMapping("/file/role")
   public String handleRoleUpload(@RequestParam("file") MultipartFile file) {
 
+    System.out.println("Upload role");
+
     storageService.store(file);
 
     try (InputStream stream = file.getInputStream()) {
@@ -81,16 +88,15 @@ public class FileUploadController {
         long extid = Long.valueOf(record.get("extid"));
         String charid = record.get("charid");
         String name = record.get("name");
+        roleService.createRole(extid, charid, name);
         String acode = record.get("acode");
-        Role role = new Role(extid, charid, name);
         for (String acode_extid: acode.split("\\|")) {
           try {
-            role.curr.addAcode(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+            roleService.addAcodeToRole(extid, Long.valueOf(acode_extid));
           } catch (NumberFormatException e) {
-            System.out.println("role error: " + record.get("extid"));
+            // System.out.println("role error: " + record.get("extid"));
           }
         }
-        roleRepository.save(role);
       }
 
     } catch (IOException e) {
@@ -102,6 +108,8 @@ public class FileUploadController {
 
   @PostMapping("/file/acode")
   public String handleAcodeUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload acode");
 
     storageService.store(file);
 
@@ -128,15 +136,19 @@ public class FileUploadController {
   public void addAcode(Element element, String acode) {
     for (String acode_extid: acode.split("\\|")) {
       try {
-        element.curr.addAcode(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+        // element.curr.addAcode(acodeRepository.findByExtid(Long.valueOf(acode_extid)));
+        elementService.addAcodeToElement(element.extid, Long.valueOf(acode_extid));
       } catch (NumberFormatException e) {
-        System.out.println("element error: " + element.extid);
+        // System.out.println("element error: " + element.extid);
       }
     }
   }
 
   @PostMapping("/file/element/appl")
   public String handleApplUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload element (appl)");
+
     handleElementUpload(file, "Appl", (record -> {
       try {
         long extid = Long.valueOf(record.get("extid"));
@@ -144,10 +156,10 @@ public class FileUploadController {
         String name = record.get("name");
         String acode = record.get("acode");
         Appl appl = new Appl(extid, charid, name);
-        addAcode(appl, acode);
         elementRepository.save(appl);
+        addAcode(appl, acode);
       } catch (Exception e) {
-        System.out.println("appl error: " + e.toString());
+        // System.out.println("appl error: " + e.toString());
       }
     }));
     return "";
@@ -155,6 +167,9 @@ public class FileUploadController {
 
   @PostMapping("/file/element/ctx")
   public String handleCtxUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload element (ctx)");
+
     handleElementUpload(file, "Ctx", (record -> {
       try {
         long extid = Long.valueOf(record.get("extid"));
@@ -162,10 +177,10 @@ public class FileUploadController {
         String name = record.get("name");
         String acode = record.get("acode");
         Ctx ctx = new Ctx(extid, charid, name);
-        addAcode(ctx, acode);
         elementRepository.save(ctx);
+        addAcode(ctx, acode);
       } catch (Exception e) {
-        System.out.println("ctx error: " + e.toString());
+        // System.out.println("ctx error: " + e.toString());
       }
     }));
     return "";
@@ -173,6 +188,9 @@ public class FileUploadController {
 
   @PostMapping("/file/element/mtyp")
   public String handleMtypUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload element (mtyp)");
+
     handleElementUpload(file, "Mtyp", (record -> {
       try {
         long extid = Long.valueOf(record.get("extid"));
@@ -180,10 +198,10 @@ public class FileUploadController {
         String name = record.get("name");
         String acode = record.get("acode");
         Mtyp mtyp = new Mtyp(extid, charid, name);
-        addAcode(mtyp, acode);
         elementRepository.save(mtyp);
+        addAcode(mtyp, acode);
       } catch (Exception e) {
-        System.out.println("mtyp error: " + e.toString());
+        // System.out.println("mtyp error: " + e.toString());
       }
     }));
     return "";
@@ -191,6 +209,9 @@ public class FileUploadController {
 
   @PostMapping("/file/element/task")
   public String handleTaskUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload element (task)");
+
     handleElementUpload(file, "Task", (record -> {
       try {
         long extid = Long.valueOf(record.get("extid"));
@@ -198,10 +219,10 @@ public class FileUploadController {
         String name = record.get("name");
         String acode = record.get("acode");
         Task task = new Task(extid, charid, name);
-        addAcode(task, acode);
         elementRepository.save(task);
+        addAcode(task, acode);
       } catch (Exception e) {
-        System.out.println("task error: " + e.toString());
+        // System.out.println("task error: " + e.toString());
       }
     }));
     return "";
@@ -209,6 +230,9 @@ public class FileUploadController {
 
   @PostMapping("/file/element/wfc")
   public String handleWfcUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload element (wfc)");
+
     handleElementUpload(file, "Wfc", (record -> {
       try {
         long extid = Long.valueOf(record.get("extid"));
@@ -216,10 +240,10 @@ public class FileUploadController {
         String name = record.get("name");
         String acode = record.get("acode");
         Wfc wfc = new Wfc(extid, charid, name);
-        addAcode(wfc, acode);
         elementRepository.save(wfc);
+        addAcode(wfc, acode);
       } catch (Exception e) {
-        System.out.println("wfc error: " + e.toString());
+        // System.out.println("wfc error: " + e.toString());
       }
     }));
     return "";

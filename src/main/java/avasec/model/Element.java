@@ -1,7 +1,5 @@
 package avasec.model;
 
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +29,9 @@ public class Element extends Entity {
 
   public class Payload extends Entity.Payload {
 
-    @DBRef
-    private List<Acode> acode;
+    private List<String> acode;
 
-    public void addAcode(Acode acode) {
+    public void addAcode(String acode) {
       if (!this.acode.contains(acode)) {
         this.acode.add(acode);
       }

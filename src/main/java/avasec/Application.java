@@ -4,6 +4,8 @@ import avasec.model.*;
 import avasec.repository.AcodeRepository;
 import avasec.repository.ElementRepository;
 import avasec.repository.RoleRepository;
+import avasec.service.ElementService;
+import avasec.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,10 +22,16 @@ import avasec.storage.StorageService;
 public class Application implements CommandLineRunner {
 
   @Autowired
+  private RoleService roleService;
+
+  @Autowired
   private RoleRepository roleRepository;
 
   @Autowired
   private AcodeRepository acodeRepository;
+
+  @Autowired
+  private ElementService elementService;
 
   @Autowired
   private ElementRepository elementRepository;
@@ -40,10 +48,10 @@ public class Application implements CommandLineRunner {
     roleRepository.deleteAll();
 
     // save a couple of roles
-    roleRepository.save(new Role(11, "role_1", "Role 1"));
-    roleRepository.save(new Role(12, "role_2", "Role 2"));
-    roleRepository.save(new Role(13, "role_3", "Role 3"));
-    roleRepository.save(new Role(14, "role_4", "Role 4"));
+    roleService.createRole(11, "role_1", "Role 1");
+    roleService.createRole(12, "role_2", "Role 2");
+    roleService.createRole(13, "role_3", "Role 3");
+    roleService.createRole(14, "role_4", "Role 4");
 
     System.out.println("-------------------------------");
     for (Role role : roleRepository.findAll()) {
@@ -97,13 +105,13 @@ public class Application implements CommandLineRunner {
 
     // ------------------------------------------------------------------------
 
-    Role role;
-    role = roleRepository.findByExtid(14);
-    role.curr.addAcode(acodeRepository.findByExtid(101));
-    role.curr.addAcode(acodeRepository.findByExtid(102));
-    role.curr.addParent(roleRepository.findByExtid(11));
-    roleRepository.save(role);
+    roleService.addAcodeToRole(14, 101);
+    roleService.addAcodeToRole(14, 102);
+    roleService.addAcodeToRole(14, 103);
 
+    roleService.addParentToRole(14, 11);
+
+    /*
     Wfc wfc;
     wfc = (Wfc)elementRepository.findByExtid(1003);
     wfc.curr.addAcode(acodeRepository.findByExtid(101));
@@ -116,6 +124,12 @@ public class Application implements CommandLineRunner {
     wfc.curr.addAcode(acodeRepository.findByExtid(104));
     wfc.curr.addAcode(acodeRepository.findByExtid(104));
     elementRepository.save(wfc);
+    */
+
+    elementService.addAcodeToElement(1003, 101);
+    elementService.addAcodeToElement(1003, 103);
+    elementService.addAcodeToElement(1004, 102);
+    elementService.addAcodeToElement(1004, 103);
   }
 
   @Bean

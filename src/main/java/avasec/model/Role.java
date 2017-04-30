@@ -1,16 +1,9 @@
 package avasec.model;
 
-import avasec.repository.AcodeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Role extends Entity {
-
-  @Autowired
-  private AcodeRepository acodeRepository;
 
   public Role.Payload curr;
   public List<Role.Payload> hist;
@@ -34,23 +27,19 @@ public class Role extends Entity {
 
   public class Payload extends Entity.Payload {
 
-    @DBRef
-    private List<Role> parent;
+    private List<String> parent;
 
-    public void addParent(Role parent) {
+    public void addParent(String parent) {
       if (!this.parent.contains(parent)) {
         this.parent.add(parent);
       }
     }
 
-    @DBRef
-    private List<Acode> acode;
+    private List<String> acode;
 
-    public void addAcode(Acode acode) {
+    public void addAcode(String acode) {
       if (!this.acode.contains(acode)) {
         this.acode.add(acode);
-        // acode.curr.addRoleId(id);
-        // acodeRepository.save(acode);
       }
     }
 

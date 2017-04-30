@@ -26,17 +26,25 @@ public class Acode extends Entity {
   }
   public class Payload extends Entity.Payload {
 
-    private List<String> role_id;
+    private List<String> role;
+    private List<String> element;
 
     public void addRoleId(String roleId) {
-      if (!this.role_id.contains(roleId)) {
-        this.role_id.add(roleId);
+      if (!this.role.contains(roleId)) {
+        this.role.add(roleId);
+      }
+    }
+
+    public void addElementId(String elementId) {
+      if (!this.element.contains(elementId)) {
+        this.element.add(elementId);
       }
     }
 
     public Payload(String charid, String name, int version) {
       super(charid, name, version);
-      this.role_id = new ArrayList<>();
+      this.role = new ArrayList<>();
+      this.element = new ArrayList<>();
     }
   }
 
