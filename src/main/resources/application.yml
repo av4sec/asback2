@@ -1,0 +1,12 @@
+spring:
+  profiles.active: development
+---
+spring:
+  profiles: development
+  http:
+    multipart:
+      max-file-size: 16MB
+      max-request-size: 16MB
+server:
+  contextPath: /api
+debug: true
