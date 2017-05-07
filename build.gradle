@@ -1,12 +1,12 @@
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
-        classpath("se.transmode.gradle:gradle-docker:1.2")
-        classpath("org.apache.commons:commons-csv:1.4")
-    }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE'
+    classpath 'se.transmode.gradle:gradle-docker:1.2'
+    classpath 'org.apache.commons:commons-csv:1.4'
+  }
 }
 
 group = 'av4sec'
@@ -18,32 +18,35 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
 
 task buildDocker(type: Docker, dependsOn: build) {
-    push = false
-    applicationName = jar.baseName
-    dockerfile = file('src/main/docker/Dockerfile')
-    doFirst {
-        copy {
-            from jar
-            into stageDir
-        }
+  push = false
+  applicationName = jar.baseName
+  dockerfile = file('src/main/docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
     }
+  }
 }
 
 jar {
-    baseName = 'asback2'
-    version =  '0.1.0'
+  baseName = 'asback2'
+  version = '0.1.0'
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile("org.apache.commons:commons-csv:1.4")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+  compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+  compile 'org.apache.commons:commons-csv:1.4'
+  compile 'io.jsonwebtoken:jjwt:0.7.0'
+  compile 'org.mindrot:jbcrypt:0.4'
+
+  testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

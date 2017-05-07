@@ -10,3 +10,7 @@ spring:
 server:
   contextPath: /api
 debug: true
+avasec:
+  jwt:
+    secretkey: secretkey
+    sessionTtl: 60

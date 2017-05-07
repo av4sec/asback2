@@ -4,6 +4,7 @@ import avasec.model.*;
 import avasec.repository.AcodeRepository;
 import avasec.repository.ElementRepository;
 import avasec.repository.RoleRepository;
+import avasec.service.ApplUserService;
 import avasec.service.ElementService;
 import avasec.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import avasec.storage.StorageService;
 
 
 @SpringBootApplication
-@EnableConfigurationProperties(StorageProperties.class)
 public class Application implements CommandLineRunner {
 
   @Autowired
@@ -35,6 +35,9 @@ public class Application implements CommandLineRunner {
 
   @Autowired
   private ElementRepository elementRepository;
+
+  @Autowired
+  private ApplUserService applUserService;
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
@@ -57,7 +60,6 @@ public class Application implements CommandLineRunner {
     for (Role role : roleRepository.findAll()) {
       System.out.println(role);
     }
-    System.out.println();
 
     // ACCESS CODES
     // ------------------------------------------------------------------------
@@ -130,6 +132,12 @@ public class Application implements CommandLineRunner {
     elementService.addAcodeToElement(1003, 103);
     elementService.addAcodeToElement(1004, 102);
     elementService.addAcodeToElement(1004, 103);
+
+
+    ApplUser applUser = new ApplUser();
+    applUser.setEmail("admin@admin.com");
+    applUser.setPassword("bc");
+    applUserService.save(applUser);
   }
 
   @Bean
