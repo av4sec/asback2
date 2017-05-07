@@ -5,6 +5,7 @@ import java.util.Collection;
 import avasec.model.Element;
 import avasec.repository.ElementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,14 +19,14 @@ public class ElementController {
   @Autowired
   private ElementRepository elementRepository;
 
-  @RequestMapping(value = "/{extid}", method = GET)
+  @GetMapping(value = "/{extid}")
   public Element getElementByExtid(@PathVariable Long extid) {
 
     Element element = elementRepository.findByExtid(extid);
     return element;
   }
 
-  @RequestMapping(method = GET)
+  @GetMapping()
   Collection<Element> allElements() {
     return elementRepository.findAll();
   }
