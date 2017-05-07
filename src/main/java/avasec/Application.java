@@ -136,7 +136,8 @@ public class Application implements CommandLineRunner {
 
     ApplUser applUser = new ApplUser();
     applUser.setEmail("admin@admin.com");
-    applUser.setPassword("bc");
+    // admin1234
+    applUser.setPassword("$2y$10$k2oEI.8QKb/gZs3BrARHOueODOMLx1k8TL4MpmB2oskh8N.AhNoye");
     applUserService.save(applUser);
   }
 
