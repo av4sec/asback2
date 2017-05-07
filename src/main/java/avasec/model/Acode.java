@@ -26,8 +26,8 @@ public class Acode extends Entity {
   }
   public class Payload extends Entity.Payload {
 
-    private List<String> role;
-    private List<String> element;
+    public List<String> role;
+    public List<String> element;
 
     public void addRoleId(String roleId) {
       if (!this.role.contains(roleId)) {

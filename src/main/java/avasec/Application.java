@@ -133,12 +133,23 @@ public class Application implements CommandLineRunner {
     elementService.addAcodeToElement(1004, 102);
     elementService.addAcodeToElement(1004, 103);
 
+    // ------------------------------------------------------------------------
 
     ApplUser applUser = new ApplUser();
     applUser.setEmail("admin@admin.com");
     // admin1234
     applUser.setPassword("$2y$10$k2oEI.8QKb/gZs3BrARHOueODOMLx1k8TL4MpmB2oskh8N.AhNoye");
     applUserService.save(applUser);
+
+    // ------------------------------------------------------------------------
+
+    for (Role role : roleRepository.findAll()) {
+      roleService.recalc(role);
+    }
+
+    for (Element element : elementRepository.findAll()) {
+      elementService.recalc(element);
+    }
   }
 
   @Bean

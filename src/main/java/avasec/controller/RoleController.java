@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import avasec.model.Role;
 import avasec.repository.RoleRepository;
+import avasec.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 @RequestMapping("/role")
 public class RoleController {
+
+  @Autowired
+  private RoleService roleService;
 
   @Autowired
   private RoleRepository roleRepository;
@@ -31,4 +35,11 @@ public class RoleController {
     return roleRepository.findAll();
   }
 
+  @RequestMapping(value = "/recalc", method = GET)
+  public void recalc() {
+
+    for (Role role : roleRepository.findAll()) {
+      roleService.recalc(role);
+    }
+  }
 }

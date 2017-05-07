@@ -40,4 +40,15 @@ public class RoleServiceImpl implements RoleService {
     role.curr.addParent(roleRepository.findByExtid(extid_parent).id);
     roleRepository.save(role);
   }
+
+  @Override
+  public void recalc(Role role) {
+    for (String acode_id: role.curr.acode) {
+      Acode acode = acodeRepository.findOne(acode_id);
+      for (String element_id: acode.curr.element) {
+        role.curr.addElement(element_id);
+      }
+    }
+    roleRepository.save(role);
+  }
 }

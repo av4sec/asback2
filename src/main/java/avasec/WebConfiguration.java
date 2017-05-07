@@ -11,7 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
-  @Value("${bloggito.jwt.secretkey}")
+
+  //@Value("${bloggito.jwt.secretkey}")
   private String secretkey;
 
   @Override

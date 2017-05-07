@@ -27,7 +27,7 @@ public class Role extends Entity {
 
   public class Payload extends Entity.Payload {
 
-    private List<String> parent;
+    public List<String> parent;
 
     public void addParent(String parent) {
       if (!this.parent.contains(parent)) {
@@ -35,7 +35,7 @@ public class Role extends Entity {
       }
     }
 
-    private List<String> acode;
+    public List<String> acode;
 
     public void addAcode(String acode) {
       if (!this.acode.contains(acode)) {
@@ -43,10 +43,19 @@ public class Role extends Entity {
       }
     }
 
+    public List<String> element;
+
+    public void addElement(String element) {
+      if (!this.element.contains(element)) {
+        this.element.add(element);
+      }
+    }
+
     public Payload(String charid, String name, int version) {
       super(charid, name, version);
       this.acode = new ArrayList<>();
       this.parent = new ArrayList<>();
+      this.element = new ArrayList<>();
     }
   }
 }

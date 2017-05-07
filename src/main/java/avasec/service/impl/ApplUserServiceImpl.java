@@ -4,10 +4,9 @@ import avasec.model.ApplUser;
 import avasec.repository.ApplUserRepository;
 import avasec.service.ApplUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-/**
- * Created by martinlinha on 07.05.17.
- */
+@Service
 public class ApplUserServiceImpl implements ApplUserService {
 
   @Autowired

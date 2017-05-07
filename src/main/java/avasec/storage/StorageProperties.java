@@ -1,8 +1,10 @@
 package avasec.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Service;
 
 @ConfigurationProperties("storage")
+@Service
 public class StorageProperties {
 
   private String location = "upload";

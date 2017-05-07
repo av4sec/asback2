@@ -29,7 +29,7 @@ public class Element extends Entity {
 
   public class Payload extends Entity.Payload {
 
-    private List<String> acode;
+    public List<String> acode;
 
     public void addAcode(String acode) {
       if (!this.acode.contains(acode)) {
@@ -37,9 +37,18 @@ public class Element extends Entity {
       }
     }
 
+    public List<String> role;
+
+    public void addRole(String role) {
+      if (!this.role.contains(role)) {
+        this.role.add(role);
+      }
+    }
+
     public Payload(String charid, String name, int version) {
       super(charid, name, version);
       this.acode = new ArrayList<>();
+      this.role = new ArrayList<>();
     }
   }
 }

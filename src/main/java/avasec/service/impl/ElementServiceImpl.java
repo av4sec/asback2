@@ -27,4 +27,15 @@ public class ElementServiceImpl implements ElementService {
     acodeRepository.save(acode);
     elementRepository.save(element);
   }
+
+  @Override
+  public void recalc(Element element) {
+    for (String acode_id: element.curr.acode) {
+      Acode acode = acodeRepository.findOne(acode_id);
+      for (String role_id: acode.curr.role) {
+        element.curr.addRole(role_id);
+      }
+    }
+    elementRepository.save(element);
+  }
 }
