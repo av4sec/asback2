@@ -97,6 +97,14 @@ public class FileUploadController {
             // System.out.println("role error: " + record.get("extid"));
           }
         }
+        String role = record.get("role");
+        for (String role_extid: role.split("\\|")) {
+          try {
+            roleService.addParentToRole(extid, Long.valueOf(role_extid));
+          } catch (NumberFormatException e) {
+            // System.out.println("role error: " + record.get("extid"));
+          }
+        }
       }
 
     } catch (IOException e) {
