@@ -35,6 +35,14 @@ public class Role extends Entity {
       }
     }
 
+    public List<String> parent_all;
+
+    public void addParentAll(String parent) {
+      if (!this.parent_all.contains(parent)) {
+        this.parent_all.add(parent);
+      }
+    }
+
     public List<String> acode;
 
     public void addAcode(String acode) {
@@ -56,6 +64,7 @@ public class Role extends Entity {
       this.acode = new ArrayList<>();
       this.parent = new ArrayList<>();
       this.element = new ArrayList<>();
+      this.parent_all = new ArrayList<>();
     }
   }
 }

@@ -17,6 +17,10 @@ import org.springframework.context.annotation.Bean;
 import avasec.storage.StorageProperties;
 import avasec.storage.StorageService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -112,6 +116,15 @@ public class Application implements CommandLineRunner {
     roleService.addAcodeToRole(14, 103);
 
     roleService.addParentToRole(14, 11);
+    roleService.addParentToRole(12, 11);
+    roleService.addParentToRole(13, 12);
+    roleService.addParentToRole(13, 14);
+
+    /*
+    List<Role> role_lst =  roleService.collectRoles(roleRepository.findByExtid(13));
+    List<Long> role_lst_id = role_lst.stream().distinct().map(r -> r.extid).collect(Collectors.toList());
+    System.out.println(role_lst_id);
+    */
 
     /*
     Wfc wfc;

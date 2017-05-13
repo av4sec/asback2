@@ -6,13 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * Created by martinlinha on 07.05.17.
- */
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-  //@Value("${bloggito.jwt.secretkey}")
+  @Value("${avasec.jwt.secretkey}")
   private String secretkey;
 
   @Override

@@ -9,6 +9,10 @@ import avasec.repository.AcodeRepository;
 import avasec.model.Role;
 import avasec.model.Acode;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -43,12 +47,37 @@ public class RoleServiceImpl implements RoleService {
 
   @Override
   public void recalc(Role role) {
-    for (String acode_id: role.curr.acode) {
-      Acode acode = acodeRepository.findOne(acode_id);
-      for (String element_id: acode.curr.element) {
-        role.curr.addElement(element_id);
-      }
+
+    List<String> elementList = getElementList(role);
+
+    List<Role> roleList = collectRoles(role);
+    for (Role parentRole: roleList.stream().distinct().collect(Collectors.toList())) {
+      role.curr.addParentAll(parentRole.id);
+      elementList.addAll(getElementList(parentRole));
     }
+
+    for (String elementId: elementList)
+      role.curr.addElement(elementId);
+
     roleRepository.save(role);
+  }
+
+  private List<Role> collectRoles(Role role) {
+    List<Role> roleList = new ArrayList<>();
+    for (String parentId: role.curr.parent) {
+      Role parentRole = roleRepository.findOne(parentId);
+      roleList.add(parentRole);
+      roleList.addAll(collectRoles(parentRole));
+    }
+    return roleList;
+  }
+
+  private List<String> getElementList(Role role) {
+    List <String> elementList = new ArrayList<>();
+    for (String acodeId: role.curr.acode) {
+      Acode acode = acodeRepository.findOne(acodeId);
+      elementList.addAll(acode.curr.element);
+    }
+    return elementList;
   }
 }
