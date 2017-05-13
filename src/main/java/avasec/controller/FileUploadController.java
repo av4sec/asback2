@@ -26,6 +26,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class FileUploadController {
 
   @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private UserService userService;
+
+  @Autowired
   private RoleRepository roleRepository;
 
   @Autowired
@@ -69,6 +75,49 @@ public class FileUploadController {
       .ok()
       .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
       .body(file);
+  }
+
+  @PostMapping("/file/user")
+  public String handleUserUpload(@RequestParam("file") MultipartFile file) {
+
+    System.out.println("Upload user");
+
+    storageService.store(file);
+
+    try (InputStream stream = file.getInputStream()) {
+
+      userRepository.deleteAll();
+
+      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+      Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader(). parse(reader);
+      for (CSVRecord record : records) {
+        long extid = Long.valueOf(record.get("extid"));
+        String name = record.get("name");
+        userService.create(extid, name);
+        String role = record.get("role");
+        for (String role_extid: role.split("\\|")) {
+          try {
+            userService.addRole(extid, Long.valueOf(role_extid));
+          } catch (NumberFormatException e) {
+            // System.out.println("role error: " + record.get("extid"));
+          }
+        }
+
+        String acode = record.get("acode");
+        for (String acode_extid: acode.split("\\|")) {
+          try {
+            userService.addAcode(extid, Long.valueOf(acode_extid));
+          } catch (NumberFormatException e) {
+            // System.out.println("user error: " + record.get("extid"));
+          }
+        }
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return "";
   }
 
   @PostMapping("/file/role")

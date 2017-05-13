@@ -1,8 +1,16 @@
 package avasec.model;
 
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Document
+@CompoundIndexes({
+  @CompoundIndex(name = "role_extid", def = "{ 'extid': 1 }", unique = true)
+})
 public class Role extends Entity {
 
   public Role.Payload curr;
