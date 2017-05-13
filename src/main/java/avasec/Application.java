@@ -1,12 +1,8 @@
 package avasec;
 
 import avasec.model.*;
-import avasec.repository.AcodeRepository;
-import avasec.repository.ElementRepository;
-import avasec.repository.RoleRepository;
-import avasec.service.ApplUserService;
-import avasec.service.ElementService;
-import avasec.service.RoleService;
+import avasec.repository.*;
+import avasec.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +20,12 @@ import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
+
+  @Autowired
+  private UserService userService;
+
+  @Autowired
+  private UserRepository userRepository;
 
   @Autowired
   private RoleService roleService;
@@ -154,7 +156,34 @@ public class Application implements CommandLineRunner {
     applUser.setPassword("$2y$10$k2oEI.8QKb/gZs3BrARHOueODOMLx1k8TL4MpmB2oskh8N.AhNoye");
     applUserService.save(applUser);
 
+
+    // USER
     // ------------------------------------------------------------------------
+    userRepository.deleteAll();
+
+    // save a couple of users
+    userService.create(1, "User 1");
+    userService.create(2, "User 2");
+
+    userService.addAcode(1, 101);
+    userService.addAcode(1, 104);
+    userService.addAcode(2, 103);
+
+    userService.addRole(1, 11);
+    userService.addRole(2, 12);
+    userService.addRole(2, 14);
+
+    System.out.println("-------------------------------");
+    for (User user : userRepository.findAll()) {
+      System.out.println(user);
+    }
+    System.out.println();
+
+    // ------------------------------------------------------------------------
+
+    for (User user : userRepository.findAll()) {
+      userService.recalc(user);
+    }
 
     for (Role role : roleRepository.findAll()) {
       roleService.recalc(role);
@@ -163,6 +192,7 @@ public class Application implements CommandLineRunner {
     for (Element element : elementRepository.findAll()) {
       elementService.recalc(element);
     }
+
   }
 
   @Bean
