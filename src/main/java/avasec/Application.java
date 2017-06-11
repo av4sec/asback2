@@ -3,6 +3,7 @@ package avasec;
 import avasec.model.*;
 import avasec.repository.*;
 import avasec.service.*;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +13,9 @@ import org.springframework.context.annotation.Bean;
 
 import avasec.storage.StorageProperties;
 import avasec.storage.StorageService;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -153,7 +157,7 @@ public class Application implements CommandLineRunner {
     ApplUser applUser = new ApplUser();
     applUser.setEmail("admin@admin.com");
     // admin1234
-    applUser.setPassword("$2y$10$k2oEI.8QKb/gZs3BrARHOueODOMLx1k8TL4MpmB2oskh8N.AhNoye");
+    applUser.setPassword("$2a$06$5nn8Y2rTNImUIP6.Qfq3DOBbZm3HBKzXCWvXogcQUvhkkB7sDEZXO");
     applUserService.save(applUser);
 
 
@@ -200,6 +204,16 @@ public class Application implements CommandLineRunner {
     return (args) -> {
       storageService.deleteAll();
       storageService.init();
+    };
+  }
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+      }
     };
   }
 }
